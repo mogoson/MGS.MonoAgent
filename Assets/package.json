@@ -1,0 +1,17 @@
+{
+    "name": "com.mgs.monoagent",
+    "version": "1.0.0",
+    "displayName": "Mono Agent",
+    "description": "Agent for MonoBehaviour in normal C# Class.",
+    "unity": "2021.3",
+    "keywords": [
+        "mono",
+        "agent",
+        "coroutine"
+    ],
+    "author": {
+        "name": "Mogoson",
+        "email": "mogoson@outlook.com",
+        "url": "https://github.com/mogoson"
+    }
+}
