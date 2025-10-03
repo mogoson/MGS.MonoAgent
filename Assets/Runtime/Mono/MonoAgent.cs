@@ -26,7 +26,7 @@ namespace MGS.Agent
             Object.DontDestroyOnLoad(Mono);
         }
 
-        public void Dispose()
+        public virtual void Dispose()
         {
             Object.Destroy(Mono.gameObject);
             Mono = null;
