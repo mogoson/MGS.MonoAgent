@@ -14,15 +14,13 @@ using UnityEngine;
 
 namespace MGS.Agent
 {
-    public class MonoAgent : IMonoAgent
+    public class MonoAgent<T> : IMonoAgent<T> where T : MonoBehaviour
     {
-        protected class AgentMono : MonoBehaviour { }
-
-        public MonoBehaviour Mono { private set; get; }
+        public T Mono { private set; get; }
 
         public MonoAgent()
         {
-            Mono = new GameObject(GetType().Name).AddComponent<AgentMono>();
+            Mono = new GameObject(GetType().Name).AddComponent<T>();
             Object.DontDestroyOnLoad(Mono);
         }
 
@@ -32,4 +30,8 @@ namespace MGS.Agent
             Mono = null;
         }
     }
+
+    public class MonoAgent : MonoAgent<AgentMono> { }
+
+    public class AgentMono : MonoBehaviour { }
 }

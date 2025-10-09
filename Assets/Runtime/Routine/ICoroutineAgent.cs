@@ -15,7 +15,7 @@ using UnityEngine;
 
 namespace MGS.Agent
 {
-    public interface ICoroutineAgent : IMonoAgent
+    public interface ICoroutineAgent
     {
         /// <summary>
         /// Start coroutine to invoke the specified action repeatedly each frame.

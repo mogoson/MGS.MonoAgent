@@ -15,11 +15,11 @@ using UnityEngine;
 
 namespace MGS.Agent
 {
-    public interface IMonoAgent : IDisposable
+    public interface IMonoAgent<T> : IDisposable where T : MonoBehaviour
     {
         /// <summary>
         /// MonoBehaviour of this agent.
         /// </summary>
-        MonoBehaviour Mono { get; }
+        T Mono { get; }
     }
 }
