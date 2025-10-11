@@ -11,6 +11,7 @@
  *************************************************************************/
 
 using System;
+using System.Collections;
 using UnityEngine;
 
 namespace MGS.Agent
@@ -25,7 +26,7 @@ namespace MGS.Agent
         public Coroutine StartTickCoroutine(Action tick)
         {
             var routine = RoutineAgent.TickRoutine(tick);
-            return Mono.StartCoroutine(routine);
+            return StartCoroutine(routine);
         }
 
         /// <summary>
@@ -38,7 +39,7 @@ namespace MGS.Agent
         public Coroutine StartTimerCoroutine(float seconds, Action<float> tick, Action arrive)
         {
             var routine = RoutineAgent.TimerRoutine(seconds, tick, arrive);
-            return Mono.StartCoroutine(routine);
+            return StartCoroutine(routine);
         }
 
         /// <summary>
@@ -50,7 +51,7 @@ namespace MGS.Agent
         public Coroutine StartWaitCoroutine(Func<bool> condition, Action action)
         {
             var routine = RoutineAgent.WaitRoutine(condition, action);
-            return Mono.StartCoroutine(routine);
+            return StartCoroutine(routine);
         }
 
         /// <summary>
@@ -62,7 +63,7 @@ namespace MGS.Agent
         public Coroutine StartUntilCoroutine(Func<bool> condition, Action action)
         {
             var routine = RoutineAgent.UntilRoutine(condition, action);
-            return Mono.StartCoroutine(routine);
+            return StartCoroutine(routine);
         }
 
         /// <summary>
@@ -74,7 +75,25 @@ namespace MGS.Agent
         public Coroutine StartDelayCoroutine(float seconds, Action action)
         {
             var routine = RoutineAgent.DelayRoutine(seconds, action);
+            return StartCoroutine(routine);
+        }
+
+        /// <summary>
+        /// Starts a Coroutine.
+        /// </summary>
+        /// <returns></returns>
+        public Coroutine StartCoroutine(IEnumerator routine)
+        {
             return Mono.StartCoroutine(routine);
+        }
+
+        /// <summary>
+        /// Stops the coroutine stored in routine running on this behaviour.
+        /// </summary>
+        /// <param name="routine"></param>
+        public void StopCoroutine(IEnumerator routine)
+        {
+            Mono.StopCoroutine(routine);
         }
     }
 }
