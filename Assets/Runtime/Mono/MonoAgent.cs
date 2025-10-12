@@ -44,7 +44,7 @@ namespace MGS.Agent
         /// Stops the coroutine stored in routine running on this behaviour.
         /// </summary>
         /// <param name="routine"></param>
-        public void StopCoroutine(IEnumerator routine)
+        public void StopCoroutine(Coroutine routine)
         {
             Mono.StopCoroutine(routine);
         }

@@ -68,6 +68,6 @@ namespace MGS.Agent
         /// Stops the coroutine stored in routine running on this behaviour.
         /// </summary>
         /// <param name="routine"></param>
-        void StopCoroutine(IEnumerator routine);
+        void StopCoroutine(Coroutine routine);
     }
 }
