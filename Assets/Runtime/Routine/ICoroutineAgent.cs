@@ -11,6 +11,7 @@
  *************************************************************************/
 
 using System;
+using System.Collections;
 using UnityEngine;
 
 namespace MGS.Agent
@@ -56,5 +57,17 @@ namespace MGS.Agent
         /// <param name="action">The action to invoke.</param>
         /// <returns>The coroutine object.</returns>
         Coroutine StartDelayCoroutine(float seconds, Action action);
+
+        /// <summary>
+        /// Starts a Coroutine.
+        /// </summary>
+        /// <returns></returns>
+        Coroutine StartCoroutine(IEnumerator routine);
+
+        /// <summary>
+        /// Stops the coroutine stored in routine running on this behaviour.
+        /// </summary>
+        /// <param name="routine"></param>
+        void StopCoroutine(IEnumerator routine);
     }
 }

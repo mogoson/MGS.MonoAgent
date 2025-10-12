@@ -10,6 +10,7 @@
  *  Description  :  Initial development version.
  *************************************************************************/
 
+using System.Collections;
 using UnityEngine;
 
 namespace MGS.Agent
@@ -28,6 +29,24 @@ namespace MGS.Agent
         {
             Object.Destroy(Mono.gameObject);
             Mono = null;
+        }
+
+        /// <summary>
+        /// Starts a Coroutine.
+        /// </summary>
+        /// <returns></returns>
+        public Coroutine StartCoroutine(IEnumerator routine)
+        {
+            return Mono.StartCoroutine(routine);
+        }
+
+        /// <summary>
+        /// Stops the coroutine stored in routine running on this behaviour.
+        /// </summary>
+        /// <param name="routine"></param>
+        public void StopCoroutine(IEnumerator routine)
+        {
+            Mono.StopCoroutine(routine);
         }
     }
 

@@ -11,6 +11,7 @@
  *************************************************************************/
 
 using System;
+using System.Collections;
 using UnityEngine;
 
 namespace MGS.Agent
@@ -21,5 +22,17 @@ namespace MGS.Agent
         /// MonoBehaviour of this agent.
         /// </summary>
         T Mono { get; }
+
+        /// <summary>
+        /// Starts a Coroutine.
+        /// </summary>
+        /// <returns></returns>
+        Coroutine StartCoroutine(IEnumerator routine);
+
+        /// <summary>
+        /// Stops the coroutine stored in routine running on this behaviour.
+        /// </summary>
+        /// <param name="routine"></param>
+        void StopCoroutine(IEnumerator routine);
     }
 }
