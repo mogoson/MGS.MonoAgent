@@ -15,7 +15,7 @@ using UnityEngine;
 
 namespace MGS.Agent
 {
-    public class CoroutineAgent : MonoAgent, ICoroutineAgent
+    public class CoroutineAgent<T> : MonoAgent<T>, ICoroutineAgent where T : MonoBehaviour
     {
         /// <summary>
         /// Start coroutine to invoke the specified action repeatedly each frame.
@@ -77,4 +77,6 @@ namespace MGS.Agent
             return StartCoroutine(routine);
         }
     }
+
+    public class CoroutineAgent : CoroutineAgent<AgentMono> { }
 }
