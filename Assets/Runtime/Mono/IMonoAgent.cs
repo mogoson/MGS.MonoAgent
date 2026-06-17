@@ -14,7 +14,7 @@ using System;
 using System.Collections;
 using UnityEngine;
 
-namespace MGS.Agent
+namespace MGS.MonoAgent
 {
     public interface IMonoAgent<T> : IDisposable where T : MonoBehaviour
     {

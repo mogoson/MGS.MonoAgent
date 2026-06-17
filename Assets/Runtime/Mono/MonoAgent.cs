@@ -13,7 +13,7 @@
 using System.Collections;
 using UnityEngine;
 
-namespace MGS.Agent
+namespace MGS.MonoAgent
 {
     public class MonoAgent<T> : IMonoAgent<T> where T : MonoBehaviour
     {
@@ -32,7 +32,7 @@ namespace MGS.Agent
         }
 
         /// <summary>
-        /// Starts a Coroutine.
+        /// Start coroutine on this behaviour.
         /// </summary>
         /// <returns></returns>
         public Coroutine StartCoroutine(IEnumerator routine)
@@ -41,7 +41,7 @@ namespace MGS.Agent
         }
 
         /// <summary>
-        /// Stops the coroutine stored in routine running on this behaviour.
+        /// Stop the coroutine on this behaviour.
         /// </summary>
         /// <param name="routine"></param>
         public void StopCoroutine(Coroutine routine)

@@ -13,7 +13,7 @@
 using NUnit.Framework;
 using UnityEngine;
 
-namespace MGS.Agent.Tests
+namespace MGS.MonoAgent.Tests
 {
     public class MonoAgentTests
     {

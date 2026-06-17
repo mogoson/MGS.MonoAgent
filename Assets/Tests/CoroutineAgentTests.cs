@@ -15,7 +15,7 @@ using NUnit.Framework;
 using UnityEngine;
 using UnityEngine.TestTools;
 
-namespace MGS.Agent.Tests
+namespace MGS.MonoAgent.Tests
 {
     public class CoroutineAgentTests
     {

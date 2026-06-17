@@ -12,9 +12,10 @@
 
 using System;
 using System.Collections;
+using System.Threading;
 using UnityEngine;
 
-namespace MGS.Agent
+namespace MGS.MonoAgent
 {
     public sealed class RoutineAgent
     {
@@ -33,13 +34,29 @@ namespace MGS.Agent
         }
 
         /// <summary>
-        /// Routine to invoke the specified action repeatedly each frame with a specified time interval.
+        /// Routine to invoke the specified action repeatedly each interval.
         /// </summary>
-        /// <param name="seconds">The time interval between invocations.</param>
+        /// <param name="interval"></param>
+        /// <param name="tick"></param>
+        /// <returns></returns>
+        public static IEnumerator TickRoutine(float interval, Action tick)
+        {
+            var yieldIns = new WaitForSeconds(interval);
+            while (true)
+            {
+                tick?.Invoke();
+                yield return yieldIns;
+            }
+        }
+
+        /// <summary>
+        /// Routine to invoke the specified action repeatedly each frame with a specified seconds.
+        /// </summary>
+        /// <param name="seconds">The time seconds.</param>
         /// <param name="tick">The action to invoke.</param>
-        /// <param name="arrive">The action to invoke when the timer arrives.</param>
+        /// <param name="arrived">The action to invoke when the timer arrived.</param>
         /// <returns>The coroutine object.</returns>
-        public static IEnumerator TimerRoutine(float seconds, Action<float> tick, Action arrive)
+        public static IEnumerator TimerRoutine(float seconds, Action<float> tick, Action arrived)
         {
             var timer = 0f;
             while (timer < seconds)
@@ -48,49 +65,53 @@ namespace MGS.Agent
                 tick?.Invoke(timer);
                 yield return null;
             }
-            arrive?.Invoke();
+            arrived?.Invoke();
+        }
+
+        /// <summary>
+        /// Routine to invoke the specified action after the specified delay seconds.
+        /// </summary>
+        /// <param name="seconds">The delay in seconds.</param>
+        /// <param name="arrived">The action to invoke.</param>
+        /// <returns>The coroutine object.</returns>
+        public static IEnumerator DelayRoutine(float seconds, Action arrived)
+        {
+            yield return new WaitForSeconds(seconds);
+            arrived?.Invoke();
         }
 
         /// <summary>
         /// Routine to invoke the specified action when the specified condition is true.
         /// </summary>
         /// <param name="condition">The condition to check.</param>
-        /// <param name="action">The action to invoke.</param>
+        /// <param name="arrived">The action to invoke.</param>
         /// <returns>The coroutine object.</returns>
-        public static IEnumerator WaitRoutine(Func<bool> condition, Action action)
+        public static IEnumerator WaitRoutine(Func<bool> condition, Action arrived)
         {
             while (!condition.Invoke())
             {
                 yield return null;
             }
-            action?.Invoke();
+            arrived?.Invoke();
         }
 
         /// <summary>
-        /// Routine to invoke the specified action repeatedly each frame until the specified condition is false.
+        /// Routine to wait thread invoke the specified action.
         /// </summary>
-        /// <param name="condition">The condition to check.</param>
-        /// <param name="action">The action to invoke.</param>
-        /// <returns>The coroutine object.</returns>
-        public static IEnumerator UntilRoutine(Func<bool> condition, Action action)
+        /// <param name="action">Action invoked on background thread.</param>
+        /// <param name="arrived"></param>
+        /// <returns></returns>
+        public static IEnumerator ThreadRoutine(Action action, Action arrived)
         {
-            while (condition.Invoke())
+            new Thread(ThreadStart) { IsBackground = true }.Start();
+            var isArrived = false;
+            void ThreadStart()
             {
-                action?.Invoke();
-                yield return null;
+                try { action?.Invoke(); }
+                catch (Exception ex) { Debug.LogException(ex); }
+                finally { isArrived = true; }
             }
-        }
-
-        /// <summary>
-        /// Routine to invoke the specified action after a specified delay seconds.
-        /// </summary>
-        /// <param name="seconds">The delay in seconds.</param>
-        /// <param name="action">The action to invoke.</param>
-        /// <returns>The coroutine object.</returns>
-        public static IEnumerator DelayRoutine(float seconds, Action action)
-        {
-            yield return new WaitForSeconds(seconds);
-            action?.Invoke();
+            yield return WaitRoutine(() => isArrived, arrived);
         }
     }
 }

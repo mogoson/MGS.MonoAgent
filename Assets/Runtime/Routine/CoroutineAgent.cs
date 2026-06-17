@@ -13,7 +13,7 @@
 using System;
 using UnityEngine;
 
-namespace MGS.Agent
+namespace MGS.MonoAgent
 {
     public class CoroutineAgent<T> : MonoAgent<T>, ICoroutineAgent where T : MonoBehaviour
     {
@@ -29,15 +29,39 @@ namespace MGS.Agent
         }
 
         /// <summary>
-        /// Start coroutine to invoke the specified action repeatedly each frame with a specified time interval.
+        /// Start coroutine to invoke the specified action repeatedly each interval.
         /// </summary>
-        /// <param name="seconds">The time interval between invocations.</param>
-        /// <param name="tick">The action to invoke.</param>
-        /// <param name="arrive">The action to invoke when the timer arrives.</param>
-        /// <returns>The coroutine object.</returns>
-        public Coroutine StartTimerCoroutine(float seconds, Action<float> tick, Action arrive)
+        /// <param name="interval"></param>
+        /// <param name="tick"></param>
+        /// <returns></returns>
+        public Coroutine StartTickCoroutine(float interval, Action tick)
         {
-            var routine = RoutineAgent.TimerRoutine(seconds, tick, arrive);
+            var routine = RoutineAgent.TickRoutine(interval, tick);
+            return StartCoroutine(routine);
+        }
+
+        /// <summary>
+        /// Start coroutine to invoke the specified action repeatedly each frame with a specified seconds.
+        /// </summary>
+        /// <param name="seconds">The time seconds.</param>
+        /// <param name="tick">The action to invoke.</param>
+        /// <param name="arrived">The action to invoke when the timer arrived.</param>
+        /// <returns>The coroutine object.</returns>
+        public Coroutine StartTimerCoroutine(float seconds, Action<float> tick, Action arrived)
+        {
+            var routine = RoutineAgent.TimerRoutine(seconds, tick, arrived);
+            return StartCoroutine(routine);
+        }
+
+        /// <summary>
+        /// Start coroutine to invoke the specified action after the specified delay seconds.
+        /// </summary>
+        /// <param name="seconds">The delay in seconds.</param>
+        /// <param name="arrived">The action to invoke.</param>
+        /// <returns>The coroutine object.</returns>
+        public Coroutine StartDelayCoroutine(float seconds, Action arrived)
+        {
+            var routine = RoutineAgent.DelayRoutine(seconds, arrived);
             return StartCoroutine(routine);
         }
 
@@ -45,35 +69,23 @@ namespace MGS.Agent
         /// Start coroutine to invoke the specified action when the specified condition is true.
         /// </summary>
         /// <param name="condition">The condition to check.</param>
-        /// <param name="action">The action to invoke.</param>
+        /// <param name="arrived">The action to invoke.</param>
         /// <returns>The coroutine object.</returns>
-        public Coroutine StartWaitCoroutine(Func<bool> condition, Action action)
+        public Coroutine StartWaitCoroutine(Func<bool> condition, Action arrived)
         {
-            var routine = RoutineAgent.WaitRoutine(condition, action);
+            var routine = RoutineAgent.WaitRoutine(condition, arrived);
             return StartCoroutine(routine);
         }
 
         /// <summary>
-        /// Start coroutine to invoke the specified action repeatedly each frame until the specified condition is false.
+        /// Start coroutine to wait thread invoke the specified action.
         /// </summary>
-        /// <param name="condition">The condition to check.</param>
-        /// <param name="action">The action to invoke.</param>
-        /// <returns>The coroutine object.</returns>
-        public Coroutine StartUntilCoroutine(Func<bool> condition, Action action)
+        /// <param name="action">Action invoked on background thread.</param>
+        /// <param name="arrived"></param>
+        /// <returns></returns>
+        public Coroutine StartThreadRoutine(Action action, Action arrived)
         {
-            var routine = RoutineAgent.UntilRoutine(condition, action);
-            return StartCoroutine(routine);
-        }
-
-        /// <summary>
-        /// Start coroutine to invoke the specified action after a specified delay seconds.
-        /// </summary>
-        /// <param name="seconds">The delay in seconds.</param>
-        /// <param name="action">The action to invoke.</param>
-        /// <returns>The coroutine object.</returns>
-        public Coroutine StartDelayCoroutine(float seconds, Action action)
-        {
-            var routine = RoutineAgent.DelayRoutine(seconds, action);
+            var routine = RoutineAgent.ThreadRoutine(action, arrived);
             return StartCoroutine(routine);
         }
     }

@@ -1,6 +1,6 @@
 {
     "name": "MGS.MonoAgent.Tests",
-    "rootNamespace": "",
+    "rootNamespace": "MGS.MonoAgent.Tests",
     "references": [
         "UnityEngine.TestRunner",
         "UnityEditor.TestRunner",
