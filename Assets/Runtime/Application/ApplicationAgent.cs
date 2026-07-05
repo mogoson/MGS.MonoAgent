@@ -17,23 +17,23 @@ namespace MGS.MonoAgent
 {
     public sealed class ApplicationAgent : MonoSingleton<ApplicationAgent>, IApplicationAgent
     {
-        public event Action<bool> OnApplicationFocusEvent;
-        public event Action<bool> OnApplicationPauseEvent;
-        public event Action OnApplicationQuitEvent;
+        public event Action<bool> OnFocusEvent;
+        public event Action<bool> OnPauseEvent;
+        public event Action OnQuitEvent;
 
         private void OnApplicationFocus(bool focus)
         {
-            OnApplicationFocusEvent?.Invoke(focus);
+            OnFocusEvent?.Invoke(focus);
         }
 
         private void OnApplicationPause(bool pause)
         {
-            OnApplicationPauseEvent?.Invoke(pause);
+            OnPauseEvent?.Invoke(pause);
         }
 
         private void OnApplicationQuit()
         {
-            OnApplicationQuitEvent?.Invoke();
+            OnQuitEvent?.Invoke();
         }
     }
 }

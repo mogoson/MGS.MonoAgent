@@ -16,8 +16,8 @@ namespace MGS.MonoAgent
 {
     public interface IApplicationAgent
     {
-        event Action<bool> OnApplicationFocusEvent;
-        event Action<bool> OnApplicationPauseEvent;
-        event Action OnApplicationQuitEvent;
+        event Action<bool> OnFocusEvent;
+        event Action<bool> OnPauseEvent;
+        event Action OnQuitEvent;
     }
 }
