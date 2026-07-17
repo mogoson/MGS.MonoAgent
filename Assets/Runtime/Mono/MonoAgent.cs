@@ -21,7 +21,7 @@ namespace MGS.MonoAgent
 
         public MonoAgent()
         {
-            Mono = new GameObject(GetType().Name).AddComponent<T>();
+            Mono = new GameObject(typeof(T).Name).AddComponent<T>();
             Object.DontDestroyOnLoad(Mono);
         }
 
@@ -51,6 +51,4 @@ namespace MGS.MonoAgent
     }
 
     public class MonoAgent : MonoAgent<AgentMono> { }
-
-    public class AgentMono : MonoBehaviour { }
 }
